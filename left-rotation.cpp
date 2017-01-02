@@ -1,3 +1,6 @@
+// Arrays: Left Rotation
+// Link to problem: https://www.hackerrank.com/challenges/ctci-array-left-rotation
+
 #include <map>
 #include <set>
 #include <list>
