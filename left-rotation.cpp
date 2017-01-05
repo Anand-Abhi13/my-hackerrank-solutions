@@ -27,19 +27,25 @@
 using namespace std;
 
 vector<int> array_left_rotation(vector<int> a, int n, int k) {
-
-    for(int j = 0; j < k ; j++){
-        
-        int i = 0;
-        int n_ele = a[0];
-        
-        while(i != n){
-            a[i] = a[i + 1];
-            i++;   
-        }
-        a[n - 1] = n_ele;
+    if (k >= n) {
+        k = k % n;
     }
-    //print a[((n - k) + i)%n] 
+    if (k == 0) return a;
+        
+    int temp[n];
+    
+    for (int i = 0; i < n; i++) {
+        if (i + k < n) {
+            temp[i] = a[i + k];
+        } 
+        else {
+            temp[i] = a[(i + k) - n];
+        }
+    }
+    //Copies temp values
+    for(int i = 0; i < n ; i ++){
+        a[i] = temp[i];
+    }
     return a;
 }
 
@@ -57,4 +63,3 @@ int main(){
     cout << endl;
     return 0;
 }
-
