@@ -1,3 +1,6 @@
+// Problem: Strings: Making Anagrams
+// Link: https://www.hackerrank.com/challenges/ctci-making-anagrams
+
 #include <map>
 #include <set>
 #include <list>
