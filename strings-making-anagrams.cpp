@@ -33,6 +33,10 @@ int number_needed(string a, string b) {
    //Sort strings a and b
    sort(a.begin(), a.end());
    sort(b.begin(), b.end());
+
+    //Search charecters
+    int result = a.find("d");
+    cout <<" search_result = " << result; 
    
    // Delete charecters in string
    while ((a.length() != 0 && b.length() != 0)){
