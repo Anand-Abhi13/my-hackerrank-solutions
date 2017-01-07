@@ -26,6 +26,7 @@
 
 using namespace std;
 
+//Logic 1/ Approach 1 produces runtime error
 int number_needed(string a, string b) {
    // Sort strings
    // Delete from end till strings match
