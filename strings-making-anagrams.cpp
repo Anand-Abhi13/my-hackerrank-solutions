@@ -30,6 +30,10 @@ int number_needed(string a, string b) {
    // Sort strings
    // Delete from end till strings match
    
+   //Sort strings a and b
+   sort(a.begin(), a.end());
+   sort(b.begin(), b.end());
+   
 }
 
 int main(){
