@@ -45,16 +45,30 @@ int number_needed(string a, string b) {
    // Logic 1
     while ((a.length() != 0 && b.length() != 0)){
         if (b.find(a[a_i]) == -1){
-                number_needed ++;
-                // Delete charecters in string
-                a.erase(remove(a.begin(), a.end(), a[a_i]), a.end());
+           number_needed ++;
+           //Delete charecters
+           a.erase(remove(a.begin(), a.end(), a[a_i]), a.end());
         }
 
         else {
             a_i ++;
         }
-   }
-   
+    
+        if (a.find(b[b_i]) == -1){
+           number_needed ++;
+           b.erase(remove(b.begin(), b.end(), b[b_i]), b.end());
+        }
+
+        else {
+            b_i ++;
+        }
+        
+        if(a.compare(b) == 0){
+            break;
+        }
+     }
+       
+    return number_needed;
 }
 
 int main(){
