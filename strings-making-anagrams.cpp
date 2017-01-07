@@ -42,9 +42,17 @@ int number_needed(string a, string b) {
     int a_i = 0;
     int b_i = 0;
    
-   // Delete charecters in string
-   while ((a.length() != 0 && b.length() != 0)){
-        a.erase(remove(a.begin(), a.end(), char_to_delete), a.end());
+   // Logic 1
+    while ((a.length() != 0 && b.length() != 0)){
+        if (b.find(a[a_i]) == -1){
+                number_needed ++;
+                // Delete charecters in string
+                a.erase(remove(a.begin(), a.end(), a[a_i]), a.end());
+        }
+
+        else {
+            a_i ++;
+        }
    }
    
 }
