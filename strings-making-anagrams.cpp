@@ -27,6 +27,8 @@
 using namespace std;
 
 int number_needed(string a, string b) {
+   // Sort strings
+   // Delete from end till strings match
    
 }
 
