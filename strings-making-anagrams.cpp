@@ -34,6 +34,11 @@ int number_needed(string a, string b) {
    sort(a.begin(), a.end());
    sort(b.begin(), b.end());
    
+   // Delete charecters in string
+   while ((a.length() != 0 && b.length() != 0)){
+        a.erase(remove(a.begin(), a.end(), char_to_delete), a.end());
+   }
+   
 }
 
 int main(){
