@@ -36,7 +36,11 @@ int number_needed(string a, string b) {
 
     //Search charecters
     int result = a.find("d");
-    cout <<" search_result = " << result; 
+    cout <<" search_result = " << result;
+   
+    // Declare index
+    int a_i = 0;
+    int b_i = 0;
    
    // Delete charecters in string
    while ((a.length() != 0 && b.length() != 0)){
