@@ -22,7 +22,8 @@
 #include <unordered_map>
 
 using namespace std;
-//Logic 1
+//Logic 1 
+//Test Cases Passed: 3; Test Cases Failed: 6; Runtime Error: 11 
 bool is_present (vector<string> magazine, string word){
     for(auto m_word: magazine)
         if(m_word == word)
