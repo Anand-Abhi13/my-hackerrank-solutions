@@ -22,8 +22,20 @@
 #include <unordered_map>
 
 using namespace std;
+//Logic 1
+bool is_present (vector<string> magazine, string word){
+    for(auto m_word: magazine)
+        if(m_word == word)
+            return true;
+        
+    return false;
+}
 
-bool ransom_note(vector<string> magazine, vector<string> ransom) {
+bool ransom_note(vector<string> magazine, vector<string> ransom) {     
+    for(auto r_word: ransom)
+        if(!is_present(magazine, r_word))
+            return false;
+    return true;
     
 }
 
