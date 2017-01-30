@@ -27,7 +27,7 @@ using namespace std;
 
 bool ransom_note(vector<string> magazine, vector<string> ransom) {     
     // Save in map;
-    map <string, int> magazine_map;
+    unordered_map <string, int> magazine_map;
     for(auto m_note : magazine)
         magazine_map[m_note] += 1;
     
