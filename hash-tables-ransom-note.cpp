@@ -22,7 +22,8 @@
 #include <unordered_map>
 
 using namespace std;
-//Logic 2 
+// Logic 2
+// Passed: 8; Failed: 12; Runtime Error: None  
 
 bool ransom_note(vector<string> magazine, vector<string> ransom) {     
     // Save in map;
