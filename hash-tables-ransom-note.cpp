@@ -32,10 +32,12 @@ bool ransom_note(vector<string> magazine, vector<string> ransom) {
         magazine_map[m_note] += 1;
     
     // If value not present in dict; return false
+    // If repeated words; Reduce count by 1
     for (const auto &r_note : ransom)
         if(magazine_map[r_note] == 0) return false;
-    
-    // If value exits return true
+	else magazine_map[r_note] --;
+
+    // If value exits returns true
     return true;
     
 }
