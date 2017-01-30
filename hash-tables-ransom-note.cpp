@@ -25,8 +25,17 @@ using namespace std;
 //Logic 2 
 
 bool ransom_note(vector<string> magazine, vector<string> ransom) {     
-    // Save in dictionary;
+    // Save in map;
+    map <string, int> magazine_map;
+    for(auto m_note : magazine)
+        magazine_map[m_note] += 1;
+    
     // If value not present in dict; return false
+    for (const auto &r_note : ransom)
+        if(magazine_map[r_note] == 0) return false;
+    
+    // If value exits return true
+    return true;
     
 }
 
