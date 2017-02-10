@@ -1,5 +1,4 @@
-/*
-Detect a cycle in a linked list. Note that the head pointer may be 'NULL' if the list is empty.
+ cycle in a linked list. Note that the head pointer may be 'NULL' if the list is empty.
 
 A Node is defined as: 
     struct Node {
@@ -8,21 +7,26 @@ A Node is defined as:
     }
 */
 
-// Logic 1
-bool has_cycle(Node* head) {
-    //save data in hastable
-    //If encountered null; return false
-    //If encountered same memory location twice; return true
+//Logic 2
+// Floyd's cycle-finding algorithm
 
-    unordered_map <Node*, int> unique_nodes;
-    Node* temp = head;
-    while (temp != nullptr){
-        unique_nodes[head] += 1;
-        if(unique_nodes[temp] > 1)
+bool has_cycle(Node* head) {
+    
+    Node* hare = head;
+    Node* tortoise = head;
+    
+    if (head == nullptr)
+        return false;
+    
+    do{
+        if(hare->next == nullptr || hare->next->next == nullptr)
             return false;
-        temp = temp -> next;
-    }
+        hare = hare->next->next;    // Hare is 2 steps ahead of tortoise
+        tortoise = tortoise->next;
+        
+    }while(hare != tortoise);
     
     return true;
-     
+    
 }
+
