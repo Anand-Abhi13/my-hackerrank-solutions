@@ -13,6 +13,16 @@ bool has_cycle(Node* head) {
     //save data in hastable
     //If encountered null; return false
     //If encountered same memory location twice; return true
-     
+
+    unordered_map <Node*, int> unique_nodes;
+    Node* temp = head;
+    while (temp != nullptr){
+        unique_nodes[head] += 1;
+        if(unique_nodes[temp] > 1)
+            return false;
+        temp = temp -> next;
+    }
+    
     return true;
+     
 }
