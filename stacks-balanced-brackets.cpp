@@ -27,34 +27,22 @@ using namespace std;
 // Logic #1
 // Passed: 19; Failed: None; Segmentation Fault: None
 bool is_balanced(string expression) {
-    
+  
     std::stack<char> check;
-
-    for(auto c : expression){
-        if(check.empty()){return false;}
-        if(c == '{' || c == '(' || c == '['){
-            check.push(c);
-        }
-        else{
-            if(c == '}'){
-                if (check.top() == '{'){
-                    check.pop();
-                }
-            }
-            else if(c == ')'){
-                if (check.top() == '('){
-                    check.pop();
-                }
-            }
-            else if(c == ']'){
-                if (check.top() == '['){
-                    check.pop();
-                }
-            }
-        }
-         
-    }
     
+    for(auto c : expression){
+        if(c == '{' || c == '(' || c == '[')
+            check.push(c);
+        
+        else{
+            if(check.empty()){return false;}
+            
+            if((c == '}' && check.top() == '{')||
+               (c == ')' && check.top() == '(')||
+               (c == ']' && check.top() == '['))
+                    check.pop();
+            }
+    }   
     return (check.empty());
     
 }
