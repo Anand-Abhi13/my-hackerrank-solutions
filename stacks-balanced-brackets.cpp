@@ -24,7 +24,37 @@ nclude <map>
 
 using namespace std;
 
+// Logic #1
+// Passed: 9; Failed: None; Segmentation Fault: 10
 bool is_balanced(string expression) {
+    
+    std::stack<char> check;
+
+    for(auto c : expression){
+        if(c == '{' || c == '(' || c == '['){
+            check.push(c);
+        }
+        else{
+            if(c == '}'){
+                if (check.top() == '{'){
+                    check.pop();
+                }
+            }
+            else if(c == ')'){
+                if (check.top() == '('){
+                    check.pop();
+                }
+            }
+            else if(c == ']'){
+                if (check.top() == '['){
+                    check.pop();
+                }
+            }
+        }
+         
+    }
+    
+    return (check.empty());
     
 }
 
