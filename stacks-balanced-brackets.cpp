@@ -25,12 +25,13 @@ nclude <map>
 using namespace std;
 
 // Logic #1
-// Passed: 9; Failed: None; Segmentation Fault: 10
+// Passed: 19; Failed: None; Segmentation Fault: None
 bool is_balanced(string expression) {
     
     std::stack<char> check;
 
     for(auto c : expression){
+        if(check.empty()){return false;}
         if(c == '{' || c == '(' || c == '['){
             check.push(c);
         }
