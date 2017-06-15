@@ -1,87 +1,134 @@
-import queue
+def has_food(grid, pos):
+	(row,col) = pos
+	return grid[row][col] == 46
 
-# Check whether there is a path from u to v using BFS traversal
-# Return True if there is a path, else return False
-# parent gives the path
-def bfs(graph, u, v, parent):
-	n = len(graph)
-	visited = []
-	for i in range(n):
-		visited.append(False)
+def is_wall(grid, pos):
+	(row,col) = pos
+	return grid[row][col] == 37
 
-	q = queue.Queue()
-	q.put(u)
-	visited[u] = True
-
-	while not q.empty():
-		u = q.get()
-
-		for w, c in enumerate(graph[u]):
-			if (not visited[w]) and c > 0:
-				q.put(w)
-				visited[w] = True
-				parent[w] = u
-
-	return visited[v]
+def is_valid_position(grid, pos):
+	(row,col) = pos
+	rows = len(grid)
+	cols = len(grid[0])
+	if row < 0 or row >= rows:
+		return False
+	if col < 0 or col >= cols:
+		return False
+	return True
 
 
-def max_flow(graph, s, t):
-	maxflow = 0
-	parent = []
-	n = len(graph)
-	for i in range(n):
-		parent.append(-1)
+def manhattan_distance(pos_from, pos_to):
+	(r1,c1) = pos_from
+	(r,c) = pos_to
+	return abs(r1 - r) + abs(c1 - c)
 
-	while True:
-		path_exist = bfs(graph, s, t, parent)
-		if not path_exist:
-			break
 
-		path_flow = 9999999999
-		u = t
-		while u != s:
-			path_flow = min(path_flow, graph[parent[u]][u])
-			u = parent[u]
+def heuristic(grid, pos, foodPos):
+	(fRow,fCol) = foodPos
+	h = manhattan_distance(pos, (fRow,fCol))
+	if pos == foodPos:
+		return h
+	else:
+		return 1 + h
 
-		maxflow = maxflow + path_flow
 
-		v = t
-		while v != s:
-			u = parent[v]
-			graph[u][v] =- path_flow
-			graph[v][u] += path_flow
-			v = parent[v]
-			
-	return maxflow
+def get_possible_moves(grid, pos):
+	(row, col) = pos
+	up = (row-1,col)
+	left = (row, col-1)
+	right = (row,col+1)
+	down = (row+1,col)
+	
+	moves = []
+
+	if is_valid_position(grid, up) and not is_wall(grid, up):
+		moves.append(up)
+	if is_valid_position(grid, left) and not is_wall(grid, left):
+		moves.append(left)
+	if is_valid_position(grid, right) and not is_wall(grid, right):
+		moves.append(right)
+	if is_valid_position(grid, down) and not is_wall(grid, down):
+		moves.append(down)
+
+	return moves
+
+
+def remove_min_move(grid, moves, foodPos):
+	min_move = moves[0]
+	min_cost = 99999999
+	for pos in moves:
+		cost = heuristic(grid, pos, foodPos)
+		if min_cost > cost:
+			min_cost = cost
+			min_move = pos
+	moves.remove(min_move)
+	return (min_move, moves)
+
+
+def pacman_astar(grid, pos, foodPos, path, visited):
+	if pos == foodPos:
+		return (True, len(path), path)
+
+	possible_moves = get_possible_moves(grid, pos)
+
+	while len(possible_moves) > 0:
+		(min_move, moves_left) = remove_min_move(grid, possible_moves, foodPos)
+		possible_moves = moves_left
+		if min_move not in visited:
+			path.append(min_move)
+			visited.append(min_move)
+			(solved,cost, path) = pacman_astar(grid,min_move,foodPos,path,visited)
+			if solved:
+				return (solved, cost, path)
+			else:
+				path.remove(min_move)
+				visited.remove(min_move)
+
+	return (False,0, path)
+
+
 
 
 def main():
-	# the undirected graph as an adjacency list
-	graph = []
+	# the pacman grid as a 2d array
+	grid = []
 
-	# read n and k from first line 
+	# read Pacman position 
 	lineargs = input().split()
-	n = int(lineargs[0])
-	k = int(lineargs[1])
+	pRow = int(lineargs[0])
+	pCol = int(lineargs[1])
 
-	# initialize the graph
-	for i in range(n):
-		edges = []
-		for j in range(n):
-			e = (i,j,0)
-			edges.append(0)
-		graph.append(edges)
+	# read food position 
+	lineargs = input().split()
+	fRow = int(lineargs[0])
+	fCol = int(lineargs[1])
 
-	# read the k edges and populate the graph
-	for i in range(k):
+	# read size of the grid
+	lineargs = input().split()
+	rows = int(lineargs[0])
+	cols = int(lineargs[1])
+
+	# load the grid
+	for i in range(rows):
 		line = input()
-		u,v = list(map(int,line.split()))
-		graph[u][v] = 1
-		graph[v][u] = 1
+		row_data = []
+		for j in range(cols):
+			row_data.append(ord(line[j]))
+		grid.append(row_data)
 
-	# compute max flow
-	maxflow = max_flow(graph, 0, n-1)
-	print(maxflow)
+	path = []
+	visited = [(pRow,pCol)]
+
+	(solved, cost, path) = pacman_astar(grid, (pRow,pCol), (fRow,fCol), path, visited)
+
+	if solved:
+		print(cost)
+		print(pRow,pCol)
+		for pos in path:
+			(row,col) = pos
+			print(row,col)
+	else:
+		print("Not solved")
 
 
 if __name__ == '__main__':
